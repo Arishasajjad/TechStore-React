@@ -53,22 +53,25 @@ function CartProvider({ children }) {
 
     // REMOVE PRODUCT FROM CART
 
-    const removeFromCart = (id) => {
+   const removeFromCart = (id) => {
 
+    setCart((previousCart) => {
 
-        setCart((previousCart) =>
-
-            previousCart.filter(
-
-                (item) => item.id !== id
-
-            )
-
+        const index = previousCart.findIndex(
+            (item) => item.id === id
         );
 
+        if (index === -1) return previousCart;
 
-    };
+        const updatedCart = [...previousCart];
 
+        updatedCart.splice(index, 1);
+
+        return updatedCart;
+
+    });
+
+};
 
 
     // EMPTY CART

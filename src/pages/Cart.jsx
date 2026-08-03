@@ -1,99 +1,77 @@
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
+function Cart() {
 
-function Cart(){
+    const { cart, removeFromCart } = useContext(CartContext);
 
-    const {cart, removeFromCart} = useContext(CartContext);
+    return (
 
+        <>
 
+            <Navbar />
 
-    return(
+            <section className="products">
 
-        <section className="products">
-
-
-            <h2>
-                Shopping Cart
-            </h2>
-
-
-
-            {
-                cart.length === 0 ?
-
-                <h3>
-                    Cart is Empty
-                </h3>
-
-
-                :
-
-
-                <div className="product-grid">
+                <h2>Shopping Cart</h2>
 
                 {
 
-                    cart.map((item)=>(
+                    cart.length === 0 ?
 
+                    <h3>Cart is Empty</h3>
 
-                        <div 
-                        className="product-card"
-                        key={item.id}
-                        >
+                    :
 
+                    <div className="product-grid">
 
-                            <img
+                        {
 
-                            src={item.thumbnail}
+                            cart.map((item, index) => (
 
-                            alt={item.title}
+                                <div
+                                    className="product-card"
+                                    key={index}
+                                >
 
-                            />
+                                    <img
+                                        src={item.thumbnail}
+                                        alt={item.title}
+                                    />
 
+                                    <h3>{item.title}</h3>
 
-                            <h3>
-                                {item.title}
-                            </h3>
+                                    <p className="price">
+                                        PKR {(item.price * 280).toLocaleString()}
+                                    </p>
 
+                                    <button
+                                        className="btn-primary"
+                                        onClick={() => removeFromCart(item.id)}
+                                    >
+                                        Remove
+                                    </button>
 
-                            <p className="price">
-                                PKR {item.price * 280}
-                            </p>
+                                </div>
 
+                            ))
 
+                        }
 
-                            <button
-
-                            className="btn-primary"
-
-                            onClick={()=>removeFromCart(item.id)}
-
-                            >
-
-                            Remove
-
-                            </button>
-
-
-                        </div>
-
-
-                    ))
+                    </div>
 
                 }
 
-                </div>
+            </section>
 
+            <Footer />
 
-            }
-
-
-        </section>
+        </>
 
     );
 
 }
-
 
 export default Cart;
